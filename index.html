@@ -768,6 +768,9 @@
         function toggleMobileMenu() {
             menu.classList.toggle('hidden');
         }
+        // ADD THIS LINE:
+        btn.addEventListener('click', toggleMobileMenu);
+
 
         // Back to Top Button Logic
         const bttBtn = document.getElementById('btt-btn');
