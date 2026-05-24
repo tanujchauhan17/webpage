@@ -74,7 +74,7 @@
 
     <!-- Navigation Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="#" onclick="showSection('home')" class="text-xl font-bold text-gray-900 font-serif tracking-tight">Tanuj Chauhan</a>
@@ -110,7 +110,7 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+    <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-10">
 
         <!-- HOME SECTION -->
         <section id="home" class="section-content active">
@@ -131,7 +131,7 @@
                         <a href="#" class="text-gray-500 hover:text-gray-900 transition" aria-label="GitHub"><i class="fa-brands fa-github fa-lg"></i></a>
                     </div>
                     
-                    <a href="assets/resume.pdf" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition w-full md:w-auto shadow-sm">
+                    <a href="#" onclick="showSection('cv')" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition w-full md:w-auto shadow-sm">
                         <i class="fas fa-file-pdf mr-2"></i> View CV
                     </a>
                 </div>
@@ -229,61 +229,17 @@
         <!-- PUBLICATIONS SECTION -->
         <section id="publications" class="section-content">
             <div class="flex justify-between items-end mb-8 border-b pb-4">
-                <h2 class="text-3xl font-serif font-bold text-gray-900">Publications & Reports</h2>
+                <h2 class="text-3xl font-serif font-bold text-gray-900">Publications</h2>
             </div>
             
-            <p class="text-sm text-gray-500 mb-8">Selected major academic reports and dissertation work.</p>
-
-            <div class="space-y-10">
-                <!-- 2025 -->
-                <div class="flex">
-                    <div class="w-12 flex-shrink-0 hidden sm:block">
-                        <span class="text-xl font-bold text-gray-300 transform -rotate-90 block mt-6">2025</span>
-                    </div>
-                    <div class="flex-grow space-y-6 sm:border-l-2 sm:border-gray-200 sm:pl-6">
-                        
-                        <!-- Paper Item -->
-                        <div class="relative group">
-                            <div class="absolute -left-[33px] top-2 w-4 h-4 rounded-full bg-white border-2 border-primary-500 hidden sm:block group-hover:bg-primary-500 transition-colors"></div>
-                            <h3 class="text-lg font-bold text-gray-900 leading-snug">Study of Magnetohydrodynamics in Accretion Flow around Black Holes</h3>
-                            <p class="text-gray-700 mt-1">
-                                <strong>Tanuj Chauhan</strong>, Advised by Prof. Santabrata Das
-                            </p>
-                            <p class="text-gray-600 italic text-sm mt-1">
-                                Master's Dissertation, Indian Institute of Technology, Guwahati
-                            </p>
-                            <div class="flex gap-3 mt-3">
-                                <a href="assets/mhd-report.pdf" target="_blank" class="text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded transition"><i class="fas fa-file-pdf mr-1"></i> Report PDF</a>
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                    <i class="fas fa-book-open text-2xl"></i>
                 </div>
-
-                <!-- 2024 -->
-                <div class="flex">
-                    <div class="w-12 flex-shrink-0 hidden sm:block">
-                        <span class="text-xl font-bold text-gray-300 transform -rotate-90 block mt-6">2024</span>
-                    </div>
-                    <div class="flex-grow space-y-6 sm:border-l-2 sm:border-gray-200 sm:pl-6">
-                        
-                        <!-- Paper Item -->
-                        <div class="relative group">
-                            <div class="absolute -left-[33px] top-2 w-4 h-4 rounded-full bg-white border-2 border-gray-300 hidden sm:block group-hover:border-primary-500 transition-colors"></div>
-                            <h3 class="text-lg font-bold text-gray-900 leading-snug">Path Integral Formulation of Quantum Mechanics</h3>
-                            <p class="text-gray-700 mt-1">
-                                <strong>Tanuj Chauhan</strong>, Advised by Prof. Justin R. David
-                            </p>
-                            <p class="text-gray-600 italic text-sm mt-1">
-                                Project Report, Indian Institute of Science, Bangalore.
-                            </p>
-                            <div class="flex gap-3 mt-3">
-                                <a href="assets/quantum-report.pdf" target="_blank" class="text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded transition"><i class="fas fa-file-pdf mr-1"></i> Report PDF</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Upcoming Publications</h3>
+                <p class="text-gray-600 max-w-lg mx-auto">
+                    Check back soon! This section is dedicated to my formal research papers and peer-reviewed publications.
+                </p>
             </div>
         </section>
 
@@ -599,8 +555,8 @@
                         </div>
                         
                         <!-- Success Message Container -->
-                        <div id="form-success" class="hidden mt-4 p-3 bg-green-50 text-green-700 rounded-md text-sm text-center">
-                            Message sent successfully! (Simulated)
+                        <div id="form-success" class="hidden mt-4 p-3 rounded-md text-sm text-center">
+                            <!-- Message will be injected via JS -->
                         </div>
                     </form>
                 </div>
@@ -611,7 +567,7 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center">
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center">
             <p class="text-gray-500 text-sm">
                 &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
             </p>
@@ -676,30 +632,62 @@
             }
         }
 
-        // Handle form submission (simulation)
+        // Handle form submission using FormSubmit API
         function handleFormSubmit(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
             
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
             // Loading state
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             btn.disabled = true;
 
-            // Simulate network request
-            setTimeout(() => {
+            // Using FormSubmit.co API for static sites
+            fetch("https://formsubmit.co/ajax/tanujchauhan17@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    _captcha: false // Prevents standard recaptcha on subsequent requests
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
                 e.target.reset();
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 
                 const successMsg = document.getElementById('form-success');
-                successMsg.classList.remove('hidden');
+                successMsg.classList.remove('hidden', 'bg-red-50', 'text-red-700');
+                successMsg.classList.add('bg-green-50', 'text-green-700');
+                successMsg.innerHTML = 'Message sent successfully!';
                 
                 // Hide success message after a few seconds
                 setTimeout(() => {
                     successMsg.classList.add('hidden');
-                }, 4000);
-            }, 1000);
+                }, 5000);
+            })
+            .catch(error => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                const successMsg = document.getElementById('form-success');
+                successMsg.classList.remove('hidden', 'bg-green-50', 'text-green-700');
+                successMsg.classList.add('bg-red-50', 'text-red-700');
+                successMsg.innerHTML = 'Oops! There was a problem sending your message.';
+            });
         }
 
         // Handle initial load based on URL hash (if someone links directly to a section)
