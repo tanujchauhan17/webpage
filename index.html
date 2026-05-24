@@ -127,8 +127,8 @@
                     
                     <div class="flex space-x-4 mb-8">
                         <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="text-gray-500 hover:text-red-500 transition" aria-label="Email"><i class="fa-solid fa-envelope fa-lg"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-blue-800 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-gray-900 transition" aria-label="GitHub"><i class="fa-brands fa-github fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/tanuj-chauhan" target="_blank" class="text-gray-500 hover:text-blue-800 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                        <a href="https://github.com/tanujchauhan17" target="_blank" class="text-gray-500 hover:text-gray-900 transition" aria-label="GitHub"><i class="fa-brands fa-github fa-lg"></i></a>
                     </div>
                     
                     <a href="#" onclick="showSection('cv')" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition w-full md:w-auto shadow-sm">
@@ -632,62 +632,33 @@
             }
         }
 
-        // Handle form submission using FormSubmit API
+        // Handle form submission (Fallback using mailto since FormSubmit is down)
         function handleFormSubmit(e) {
             e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
             
             // Get form values
             const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Loading state
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-
-            // Using FormSubmit.co API for static sites
-            fetch("https://formsubmit.co/ajax/tanujchauhan17@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message,
-                    _captcha: false // Prevents standard recaptcha on subsequent requests
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
+            // Construct the email body
+            const emailBody = `Hello, my name is ${name}.%0D%0A%0D%0A${message.replace(/\n/g, '%0D%0A')}`;
+            
+            // Create the mailto link
+            const mailtoLink = `mailto:tanujchauhan17@gmail.com?subject=${encodeURIComponent('Portfolio Contact: ' + subject)}&body=${emailBody}`;
+            
+            // Open the user's default email client
+            window.location.href = mailtoLink;
+            
+            // Show a redirect state on the button
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Redirecting to Email...';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
                 e.target.reset();
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                
-                const successMsg = document.getElementById('form-success');
-                successMsg.classList.remove('hidden', 'bg-red-50', 'text-red-700');
-                successMsg.classList.add('bg-green-50', 'text-green-700');
-                successMsg.innerHTML = 'Message sent successfully!';
-                
-                // Hide success message after a few seconds
-                setTimeout(() => {
-                    successMsg.classList.add('hidden');
-                }, 5000);
-            })
-            .catch(error => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                
-                const successMsg = document.getElementById('form-success');
-                successMsg.classList.remove('hidden', 'bg-green-50', 'text-green-700');
-                successMsg.classList.add('bg-red-50', 'text-red-700');
-                successMsg.innerHTML = 'Oops! There was a problem sending your message.';
-            });
+            }, 3000);
         }
 
         // Handle initial load based on URL hash (if someone links directly to a section)
