@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
     <title>Tanuj Chauhan | M.Sc. Physics, IIT Guwahati</title>
+    <meta name="description" content="Portfolio of Tanuj Chauhan, M.Sc. Physics graduate from IIT Guwahati, specializing in Astrophysics, Cosmology, and Magnetohydrodynamics.">
+    <meta property="og:title" content="Tanuj Chauhan | M.Sc. Physics">
+    <meta property="og:description" content="Portfolio and research projects in Astrophysics and Cosmology.">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔭</text></svg>">
+
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Google Fonts for typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enable dark mode toggling via class
             theme: {
                 extend: {
                     fontFamily: {
@@ -21,55 +34,71 @@
                     },
                     colors: {
                         primary: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            200: '#99f6e4',
-                            300: '#5eead4',
-                            400: '#2dd4bf',
-                            500: '#14b8a6', // Teal main
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
+                            50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf',
+                            500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a',
                         },
-                        dark: '#1e293b'
+                        dark: '#0f172a'
                     }
                 }
             }
         }
+        
+        // Check for saved dark mode preference immediately to prevent flash
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     </script>
     <style>
-        /* Custom styles for the SPA navigation */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0f766e; }
+
+        /* Subtle Background Pattern */
+        .bg-pattern {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark .bg-pattern {
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+        }
+
+        /* Smooth Section Transitions (Slide + Fade) */
         .section-content {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            opacity: 0;
         }
         .section-content.active {
             display: block;
+            animation: slideUpFade 0.5s ease-out forwards;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Nav Links */
         .nav-link.active {
-            color: #0d9488; /* Tailwind primary-600 */
+            color: #0d9488;
             border-bottom: 2px solid #0d9488;
         }
+        .dark .nav-link.active {
+            color: #2dd4bf;
+            border-bottom-color: #2dd4bf;
+        }
 
-        /* Publication styling */
-        .pub-year {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
+        /* Mobile Nav Active */
+        .mobile-nav-link.active {
+            background-color: #f0fdfa; /* primary-50 */
+            color: #0d9488;
         }
-        
-        /* Gallery image hover effect */
-        .gallery-item {
-            cursor: pointer;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.05);
+        .dark .mobile-nav-link.active {
+            background-color: #115e59; /* primary-800 */
+            color: #ccfbf1;
         }
 
         /* Image Modal Styling */
@@ -82,145 +111,163 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(15, 23, 42, 0.95); /* Slate 900 */
+            backdrop-filter: blur(4px);
             animation: fadeIn 0.3s;
         }
-
         #image-modal-content {
             margin: auto;
             display: block;
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 85vh;
             margin-top: 5vh;
             object-fit: contain;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 0.5rem;
         }
-
         #image-modal-caption {
             margin: auto;
             display: block;
             width: 80%;
             max-width: 700px;
             text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
+            color: #e2e8f0;
+            padding: 15px 0;
+            font-size: 1.1rem;
         }
-
         #image-modal-close {
             position: absolute;
-            top: 15px;
-            right: 35px;
+            top: 20px;
+            right: 40px;
             color: #f1f1f1;
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
+            z-index: 1001;
         }
-
-        #image-modal-close:hover,
-        #image-modal-close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
+        #image-modal-close:hover { color: #2dd4bf; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-gray-50 dark:bg-dark text-gray-800 dark:text-gray-200 font-sans antialiased flex flex-col min-h-screen bg-pattern transition-colors duration-300">
 
     <!-- Navigation Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="w-full px-4 sm:px-6 lg:px-8">
+    <header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="#" onclick="showSection('home')" class="text-xl font-bold text-gray-900 font-serif tracking-tight">Tanuj Chauhan</a>
+                    <a href="#" onclick="showSection('home')" class="text-xl font-bold text-gray-900 dark:text-white font-serif tracking-tight">Tanuj Chauhan</a>
                 </div>
-                <!-- Desktop Menu -->
-                <nav class="hidden md:flex space-x-6 items-center">
-                    <button onclick="showSection('home')" class="nav-link active text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="home">Home</button>
-                    <button onclick="showSection('research')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="research">Research</button>
-                    <button onclick="showSection('publications')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="publications">Publications</button>
-                    <button onclick="showSection('cv')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="cv">CV</button>
-                    <button onclick="showSection('astrophotography')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="astrophotography">Astrophotography</button>
-                    <button onclick="showSection('contact')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="contact">Contact</button>
-                </nav>
-                <!-- Mobile menu button -->
-                <div class="flex items-center md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+                
+                <div class="flex items-center gap-6">
+                    <!-- Desktop Menu -->
+                    <nav class="hidden md:flex space-x-6 items-center">
+                        <button onclick="showSection('home')" class="nav-link active text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="home" aria-current="page">Home</button>
+                        <button onclick="showSection('research')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="research">Research</button>
+                        <button onclick="showSection('publications')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="publications">Publications</button>
+                        <button onclick="showSection('cv')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="cv">CV</button>
+                        <button onclick="showSection('astrophotography')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="astrophotography">Astrophotography</button>
+                        <button onclick="showSection('contact')" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-1 py-2 font-medium transition-colors" data-target="contact">Contact</button>
+                    </nav>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle Dark Mode">
+                        <i id="theme-toggle-icon" class="fas fa-moon text-lg"></i>
                     </button>
+
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center md:hidden">
+                        <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none p-2">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 transition-colors duration-300 shadow-lg">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="showSection('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Home</button>
-                <button onclick="showSection('research'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Research</button>
-                <button onclick="showSection('publications'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Publications</button>
-                <button onclick="showSection('cv'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">CV</button>
-                <button onclick="showSection('astrophotography'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Astrophotography</button>
-                <button onclick="showSection('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Contact</button>
+                <button onclick="showSection('home'); toggleMobileMenu()" class="mobile-nav-link active block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 rounded-md transition-colors" data-target="home">Home</button>
+                <button onclick="showSection('research'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors" data-target="research">Research</button>
+                <button onclick="showSection('publications'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors" data-target="publications">Publications</button>
+                <button onclick="showSection('cv'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors" data-target="cv">CV</button>
+                <button onclick="showSection('astrophotography'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors" data-target="astrophotography">Astrophotography</button>
+                <button onclick="showSection('contact'); toggleMobileMenu()" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors" data-target="contact">Contact</button>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-10">
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
 
         <!-- HOME SECTION -->
         <section id="home" class="section-content active">
-            <div class="flex flex-col md:flex-row gap-10 items-start">
+            
+            <!-- Hero Banner Integration -->
+            <div class="w-full h-48 md:h-64 bg-gray-900 rounded-2xl mb-8 overflow-hidden relative shadow-md">
+                <!-- Using a lighter gradient so your custom image shows through clearly -->
+                <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-primary-900 opacity-50 z-10"></div>
+                <!-- Banner points to assets/banner.jpg. If not found, it shows the placeholder. -->
+                <img src="assets/banner.jpg" alt="Banner" class="w-full h-full object-cover z-0" loading="lazy" onerror="this.src='https://placehold.co/1200x400/0f172a/2dd4bf?text=Astrophysics+%26+Cosmology'">
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-10 items-start -mt-24 md:-mt-32 px-4 md:px-8 relative z-20">
                 <!-- Profile Image & Quick Links -->
                 <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
-                    <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg mb-6 relative">
-                        <!-- Profile Picture -->
-                        <img src="assets/profile-pic.jpg" alt="Tanuj Chauhan" class="w-full h-full object-cover">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl mb-6 relative bg-white">
+                        <img src="assets/profile-pic.jpg" alt="Tanuj Chauhan" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/e2e8f0/475569?text=TC'">
                     </div>
-                    <h1 class="text-3xl font-serif font-bold text-gray-900 mb-2">Tanuj Chauhan</h1>
-                    <p class="text-lg text-primary-600 font-medium mb-1">M.Sc. Physics</p>
-                    <p class="text-gray-600 mb-6">Department of Physics<br>Indian Institute of Technology, Guwahati</p>
+                    <h1 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Tanuj Chauhan</h1>
+                    <p class="text-lg text-primary-600 dark:text-primary-400 font-semibold mb-2">M.Sc. Physics</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">Department of Physics<br>Indian Institute of Technology, Guwahati</p>
                     
-                    <div class="flex space-x-4 mb-8">
-                        <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="text-gray-500 hover:text-red-500 transition" aria-label="Email"><i class="fa-solid fa-envelope fa-lg"></i></a>
-                        <a href="https://linkedin.com/in/tanuj-chauhan" target="_blank" class="text-gray-500 hover:text-blue-800 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></a>
-                        <a href="https://github.com/tanujchauhan17" target="_blank" class="text-gray-500 hover:text-gray-900 transition" aria-label="GitHub"><i class="fa-brands fa-github fa-lg"></i></a>
+                    <div class="flex space-x-5 mb-8">
+                        <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors transform hover:scale-110" aria-label="Email"><i class="fa-solid fa-envelope fa-xl"></i></a>
+                        <a href="https://linkedin.com/in/tanuj-chauhan" target="_blank" class="text-gray-500 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-400 transition-colors transform hover:scale-110" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-xl"></i></a>
+                        <a href="https://github.com/tanujchauhan17" target="_blank" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors transform hover:scale-110" aria-label="GitHub"><i class="fa-brands fa-github fa-xl"></i></a>
                     </div>
                     
-                    <a href="#" onclick="showSection('cv')" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition w-full md:w-auto shadow-sm">
-                        <i class="fas fa-file-pdf mr-2"></i> View CV
+                    <a href="#" onclick="showSection('cv')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 transition-all duration-300 w-full md:w-auto shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        <i class="fas fa-file-pdf mr-2"></i> View Full CV
                     </a>
                 </div>
                 
                 <!-- About Content -->
-                <div class="w-full md:w-2/3 prose prose-lg prose-teal max-w-none text-gray-700">
-                    <h2 class="text-2xl font-serif font-bold text-gray-900 mb-4 border-b pb-2">Profile</h2>
-                    <p class="mb-4">
-                        Hello! I recently completed my Masters in Physics from the <a href="#" class="text-primary-600 hover:underline">Department of Physics</a> at the Indian Institute of Technology, Guwahati. I am passionate about understanding the underlying laws of the universe and am particularly interested in the fields of cosmology, general relativity, and astrophysics.
+                <div class="w-full md:w-2/3 prose prose-lg prose-teal dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 mt-10 md:mt-24">
+                    <h2 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Profile</h2>
+                    <!-- Added leading-relaxed for typography refinement -->
+                    <p class="mb-4 leading-relaxed">
+                        Hello! I recently completed my Masters in Physics from the <a href="#" class="text-primary-600 dark:text-primary-400 hover:underline">Department of Physics</a> at the Indian Institute of Technology, Guwahati. I am passionate about understanding the underlying laws of the universe and am particularly interested in the fields of cosmology, general relativity, and astrophysics.
                     </p>
-                    <p class="mb-4">
+                    <p class="mb-4 leading-relaxed">
                         With my strong background in programming, mathematical physics, and theoretical physics, I aspire to pursue dedicated research in the field of Astrophysics and am ready to devote myself completely to this purpose.
                     </p>
-                    <p class="mb-6">
+                    <p class="mb-6 leading-relaxed">
                         Prior to IIT Guwahati, I received my B.Sc. in Physics from Himachal Pradesh University, securing the 1st position in Mathematics in my final year.
                     </p>
 
-                    <h3 class="text-xl font-serif font-bold text-gray-900 mb-3 mt-8">Recent Updates</h3>
-                    <ul class="space-y-3 list-none p-0">
-                        <li class="flex items-start border-l-4 border-primary-500 bg-gray-50 p-3 rounded-r-md">
-                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2026</span>
-                            <span>Qualified <strong>JEST Physics</strong> with an <strong>AIR 83</strong> and <strong>GATE Physics</strong> with AIR 94.</span>
+                    <h3 class="text-xl font-serif font-bold text-gray-900 dark:text-white mb-4 mt-10">Recent Updates</h3>
+                    <ul class="space-y-4 list-none p-0">
+                        <li class="flex items-start border-l-4 border-primary-500 bg-white dark:bg-gray-800 shadow-sm p-4 rounded-r-lg transition-transform hover:-translate-x-1 duration-300">
+                            <span class="text-sm font-semibold text-primary-600 dark:text-primary-400 w-24 flex-shrink-0 mt-0.5">2026</span>
+                            <span class="leading-relaxed">Qualified <strong>JEST Physics</strong> with an <strong>AIR 83</strong> and <strong>GATE Physics</strong> with AIR 94.</span>
                         </li>
-                        <li class="flex items-start border-l-4 border-gray-300 p-3">
-                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2025</span>
-                            <span>Completed my Master's Dissertation investigating <strong>Magnetohydrodynamics in Accretion Flows</strong> under Prof. Santabrata Das. Graduated with an M.Sc. in Physics from IIT Guwahati.</span>
+                        <li class="flex items-start border-l-4 border-gray-300 dark:border-gray-600 p-4">
+                            <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 w-24 flex-shrink-0 mt-0.5">2025</span>
+                            <span class="leading-relaxed">Completed my Master's Dissertation investigating <strong>Magnetohydrodynamics in Accretion Flows</strong> under Prof. Santabrata Das. Graduated with an M.Sc. in Physics from IIT Guwahati.</span>
                         </li>
-                        <li class="flex items-start border-l-4 border-gray-300 p-3">
-                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2024</span>
-                            <span>Conducted research on the <strong>Path Integral Formulation of Quantum Mechanics</strong> under Prof. Justin R. David at IISc Bangalore.</span>
+                        <li class="flex items-start border-l-4 border-gray-300 dark:border-gray-600 p-4">
+                            <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 w-24 flex-shrink-0 mt-0.5">2024</span>
+                            <span class="leading-relaxed">Conducted research on the <strong>Path Integral Formulation of Quantum Mechanics</strong> under Prof. Justin R. David at IISc Bangalore.</span>
                         </li>
-                        <li class="flex items-start border-l-4 border-gray-300 p-3">
-                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2023</span>
-                            <span>Qualified <strong>IIT JAM Physics</strong> with <strong>AIR 258</strong>. Ranked 1st in Mathematics during B.Sc. III.</span>
+                        <li class="flex items-start border-l-4 border-gray-300 dark:border-gray-600 p-4">
+                            <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 w-24 flex-shrink-0 mt-0.5">2023</span>
+                            <span class="leading-relaxed">Qualified <strong>IIT JAM Physics</strong> with <strong>AIR 258</strong>. Ranked 1st in Mathematics during B.Sc. III.</span>
                         </li>
                     </ul>
                 </div>
@@ -229,52 +276,53 @@
 
         <!-- RESEARCH SECTION -->
         <section id="research" class="section-content">
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8 border-b pb-4">Research Interests & Projects</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">Research Interests & Projects</h2>
             
-            <p class="text-lg text-gray-700 mb-10 max-w-3xl">
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-10 max-w-3xl leading-relaxed">
                 I am keenly interested in cosmology, astrophysics, and relativity. My academic projects involve utilizing mathematical and theoretical physics alongside computational methods to analyze complex astrophysical phenomena and quantum systems.
             </p>
 
-            <div class="space-y-12">
-                <!-- Project 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 hover:shadow-md transition">
-                    <div class="w-full md:w-1/3 h-48 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-                         <img src="assets/project-mhd.jpg" alt="Project 1" class="w-full h-full object-cover">
+            <div class="space-y-10">
+                <!-- Project 1 with Enhanced Hover -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row gap-8 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                    <div class="w-full md:w-1/3 h-56 bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden flex-shrink-0 relative group">
+                        <!-- Added pulse class for loading placeholder style -->
+                         <img src="assets/project-mhd.jpg" alt="MHD Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Accretion+Flows'">
                     </div>
-                    <div class="w-full md:w-2/3">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Magnetohydrodynamics in Accretion Flows</h3>
-                        <div class="flex gap-2 mb-3">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">Astrophysics</span>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Black Holes</span>
+                    <div class="w-full md:w-2/3 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Magnetohydrodynamics in Accretion Flows</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-300 border border-teal-200 dark:border-teal-800/50">Astrophysics</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50">Black Holes</span>
                         </div>
-                        <p class="text-gray-600 mb-4">
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
                             Investigated the global structure of advection-dominated accretion flows around Schwarzschild black holes using a magnetohydrodynamic (MHD) framework. Computed global transonic solutions to analyze the formation of centrifugally supported shock waves, mass-loss effects, and post-shock corona properties under the influence of radiative cooling and toroidal magnetic fields.
                         </p>
-                        <p class="text-sm font-medium text-gray-500">Supervisor: Prof. Santabrata Das, IIT Guwahati</p>
-                        <div class="flex flex-wrap gap-3 mt-5">
-                            <a href="assets/mhd-report.pdf" target="_blank" class="inline-flex items-center text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 px-3 py-1.5 rounded transition shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i> Report PDF</a>
-                            <a href="https://github.com/tanujchauhan17/webpage" target="_blank" class="inline-flex items-center text-xs font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded transition shadow-sm"><i class="fab fa-github mr-1.5 text-black"></i> GitHub Repository</a>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400"><i class="fas fa-user-tie mr-2"></i>Supervisor: Prof. Santabrata Das, IIT Guwahati</p>
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <a href="assets/mhd-report.pdf" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors shadow-sm"><i class="fas fa-file-pdf mr-2"></i> Report PDF</a>
+                            <a href="https://github.com/tanujchauhan17/webpage" target="_blank" class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors shadow-sm"><i class="fab fa-github mr-2"></i> Repository</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 hover:shadow-md transition">
-                    <div class="w-full md:w-1/3 h-48 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-                         <img src="assets/project-quantum.jpg" alt="Project 2" class="w-full h-full object-cover">
+                <!-- Project 2 with Enhanced Hover -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row gap-8 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+                    <div class="w-full md:w-1/3 h-56 bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden flex-shrink-0 relative group">
+                         <img src="assets/project-quantum.jpg" alt="Quantum Mechanics" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/475569?text=Quantum+Mechanics'">
                     </div>
-                    <div class="w-full md:w-2/3">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Path Integral Formulation of Quantum Mechanics</h3>
-                        <div class="flex gap-2 mb-3">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Quantum Mechanics</span>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">Theoretical Physics</span>
+                    <div class="w-full md:w-2/3 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Path Integral Formulation of Quantum Mechanics</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50">Quantum Mechanics</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50">Theoretical Physics</span>
                         </div>
-                        <p class="text-gray-600 mb-4">
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
                             Analyzed quantum systems using path integral and operator approaches to link kernels to physical observables and calculate many-body partition functions. This work explored foundational concepts bridging classical trajectories with quantum probability amplitudes.
                         </p>
-                        <p class="text-sm font-medium text-gray-500">Supervisor: Prof. Justin R. David, IISc Bangalore</p>
-                        <div class="flex flex-wrap gap-3 mt-5">
-                            <a href="assets/quantum-report.pdf" target="_blank" class="inline-flex items-center text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 px-3 py-1.5 rounded transition shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i> Report PDF</a>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400"><i class="fas fa-user-tie mr-2"></i>Supervisor: Prof. Justin R. David, IISc Bangalore</p>
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <a href="assets/quantum-report.pdf" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors shadow-sm"><i class="fas fa-file-pdf mr-2"></i> Report PDF</a>
                         </div>
                     </div>
                 </div>
@@ -283,16 +331,16 @@
 
         <!-- PUBLICATIONS SECTION -->
         <section id="publications" class="section-content">
-            <div class="flex justify-between items-end mb-8 border-b pb-4">
-                <h2 class="text-3xl font-serif font-bold text-gray-900">Publications</h2>
+            <div class="flex justify-between items-end mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">Publications</h2>
             </div>
             
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                <div class="w-16 h-16 bg-gray-50 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400 dark:text-gray-300 shadow-inner">
                     <i class="fas fa-book-open text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Upcoming Publications</h3>
-                <p class="text-gray-600 max-w-lg mx-auto">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Upcoming Publications</h3>
+                <p class="text-gray-600 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
                     Check back soon! This section is dedicated to my formal research papers and peer-reviewed publications.
                 </p>
             </div>
@@ -300,143 +348,148 @@
 
         <!-- CV SECTION -->
         <section id="cv" class="section-content">
-            <div class="flex justify-between items-center mb-8 border-b pb-4">
-                <h2 class="text-3xl font-serif font-bold text-gray-900">Curriculum Vitae</h2>
-                <a href="assets/resume.pdf" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition">
-                    <i class="fas fa-download mr-2"></i> Full CV (PDF)
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-gray-200 dark:border-gray-700 pb-4 gap-4">
+                <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">Curriculum Vitae</h2>
+                <a href="assets/resume.pdf" target="_blank" class="inline-flex items-center px-5 py-2.5 rounded-lg shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 dark:bg-primary-600 dark:hover:bg-primary-500 transition-colors transform hover:-translate-y-0.5">
+                    <i class="fas fa-download mr-2"></i> Download PDF
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <!-- Sidebar (Skills, etc) -->
-                <div class="md:col-span-1 space-y-8">
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Education</h3>
-                        <div class="mb-4">
-                            <p class="font-bold text-gray-800">M.Sc. in Physics</p>
-                            <p class="text-gray-600 text-sm">IIT Guwahati</p>
-                            <p class="text-gray-500 text-xs">2023 - 2025</p>
-                            <p class="text-gray-500 text-xs italic mt-1">CGPA: 7.78</p>
+                <div class="lg:col-span-1 space-y-10">
+                    
+                    <!-- Education -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-5 flex items-center"><i class="fas fa-graduation-cap mr-2"></i> Education</h3>
+                        <div class="mb-5 relative pl-4 border-l-2 border-primary-500">
+                            <div class="absolute w-2.5 h-2.5 bg-primary-500 rounded-full -left-[5px] top-1.5"></div>
+                            <p class="font-bold text-gray-900 dark:text-white">M.Sc. in Physics</p>
+                            <p class="text-primary-600 dark:text-primary-400 text-sm font-medium mb-1">IIT Guwahati</p>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs flex justify-between"><span>2023 - 2025</span> <span class="font-semibold">CGPA: 7.78</span></p>
                         </div>
-                        <div class="mb-4">
-                            <p class="font-bold text-gray-800">B.Sc. in Physics</p>
-                            <p class="text-gray-600 text-sm">Himachal Pradesh University</p>
-                            <p class="text-gray-500 text-xs">2020 - 2023</p>
-                            <p class="text-gray-500 text-xs italic mt-1">CGPA: 8.91 (1st in Mathematics)</p>
+                        <div class="mb-5 relative pl-4 border-l-2 border-gray-300 dark:border-gray-600">
+                            <div class="absolute w-2.5 h-2.5 bg-gray-300 dark:bg-gray-600 rounded-full -left-[5px] top-1.5"></div>
+                            <p class="font-bold text-gray-900 dark:text-white">B.Sc. in Physics</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Himachal Pradesh University</p>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs flex justify-between"><span>2020 - 2023</span> <span class="font-semibold" title="1st in Mathematics">CGPA: 8.91</span></p>
                         </div>
-                        <div>
-                            <p class="font-bold text-gray-800">Senior Secondary</p>
-                            <p class="text-gray-600 text-sm">CBSE (Physical Science)</p>
-                            <p class="text-gray-500 text-xs">2019</p>
-                            <p class="text-gray-500 text-xs italic mt-1">88.2%</p>
+                        <div class="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700">
+                            <div class="absolute w-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full -left-[4px] top-1.5"></div>
+                            <p class="font-bold text-gray-900 dark:text-white text-sm">Senior Secondary</p>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs flex justify-between mt-1"><span>CBSE (Physical Science)</span> <span>88.2%</span></p>
                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Skills</h3>
-                        <div class="space-y-3">
+                    <!-- Skills (Simple Tag Layout) -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-5 flex items-center"><i class="fas fa-code mr-2"></i> Technical Skills</h3>
+                        
+                        <div class="space-y-5">
                             <div>
-                                <p class="text-sm font-semibold text-gray-700 mb-1">Languages</p>
+                                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Languages & Tools</p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Python</span>
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">FORTRAN</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Python (NumPy, SciPy)</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">FORTRAN</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Mathematical Physics</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Data Analysis / Plotting</span>
                                 </div>
                             </div>
+
                             <div>
-                                <p class="text-sm font-semibold text-gray-700 mb-1">Key Courses</p>
+                                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Key Coursework</p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Electrodynamics</span>
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Quantum Mechanics</span>
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Relativity</span>
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Linear Algebra</span>
-                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Numerical Methods</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Electrodynamics</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Quantum Mechanics</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Relativity</span>
+                                    <span class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium">Linear Algebra</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Competitive Exams</h3>
-                        <ul class="text-sm text-gray-700 space-y-2">
-                            <li><span class="font-semibold">JEST Physics (AIR 83)</span> <span class="text-gray-500 text-xs float-right">2026</span></li>
-                            <li><span class="font-semibold">GATE Physics (AIR 94)</span> <span class="text-gray-500 text-xs float-right">2026</span></li>
-                            <li><span class="font-semibold">JEST Physics (AIR 351)</span> <span class="text-gray-500 text-xs float-right">2025</span></li>
-                            <li><span class="font-semibold">IIT JAM Physics (AIR 258)</span> <span class="text-gray-500 text-xs float-right">2023</span></li>
+                    <!-- Exams -->
+                    <div class="bg-gradient-to-br from-primary-50 to-white dark:from-gray-800 dark:to-gray-800 p-6 rounded-xl shadow-sm border border-primary-100 dark:border-gray-700">
+                        <h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4 flex items-center"><i class="fas fa-trophy mr-2 text-yellow-500"></i> Exams & Ranks</h3>
+                        <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-3">
+                            <li class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700"><span class="font-bold text-gray-900 dark:text-white">JEST Physics</span> <span class="text-primary-600 dark:text-primary-400 font-bold bg-primary-100 dark:bg-primary-900/40 px-2 py-0.5 rounded text-xs">AIR 83</span></li>
+                            <li class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700"><span class="font-bold text-gray-900 dark:text-white">GATE Physics</span> <span class="text-blue-600 dark:text-blue-400 font-bold bg-blue-100 dark:bg-blue-900/40 px-2 py-0.5 rounded text-xs">AIR 94</span></li>
+                            <li class="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700"><span class="font-medium">JEST Physics</span> <span class="text-gray-500 dark:text-gray-400 text-xs">AIR 351 (2025)</span></li>
+                            <li class="flex justify-between items-center"><span class="font-medium">IIT JAM Physics</span> <span class="text-gray-500 dark:text-gray-400 text-xs">AIR 258 (2023)</span></li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Main CV Content -->
-                <div class="md:col-span-2 space-y-8">
+                <div class="lg:col-span-2 space-y-10">
                     
                     <!-- Experience -->
-                    <div>
-                        <h3 class="text-xl font-serif font-bold text-primary-700 mb-4 flex items-center">
-                            <i class="fas fa-microscope mr-2 text-primary-500"></i> Research Experience
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                            <i class="fas fa-microscope mr-3 text-primary-500"></i> Research Experience
                         </h3>
                         
-                        <div class="relative border-l-2 border-gray-200 ml-3 space-y-6">
+                        <div class="relative border-l-2 border-gray-200 dark:border-gray-700 ml-3 space-y-8">
                             
-                            <div class="pl-6 relative">
-                                <div class="absolute w-3 h-3 bg-primary-500 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
-                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                                    <h4 class="text-lg font-bold text-gray-900">Master's Dissertation Researcher</h4>
-                                    <span class="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">2024 - 2025</span>
+                            <div class="pl-8 relative group">
+                                <div class="absolute w-4 h-4 bg-white dark:bg-gray-800 border-4 border-primary-500 rounded-full -left-[9px] top-1 transition-transform group-hover:scale-125 duration-300"></div>
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+                                    <h4 class="text-xl font-bold text-gray-900 dark:text-white">Master's Dissertation Researcher</h4>
+                                    <span class="text-sm font-medium text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-full mt-2 sm:mt-0">2024 - 2025</span>
                                 </div>
-                                <p class="text-gray-600 font-medium text-sm mb-2">Indian Institute of Technology, Guwahati | Prof. Santabrata Das</p>
-                                <ul class="list-disc list-outside ml-4 text-gray-700 text-sm space-y-1">
+                                <p class="text-gray-600 dark:text-gray-400 font-medium text-sm mb-3">Indian Institute of Technology, Guwahati | Supervisor: Prof. Santabrata Das</p>
+                                <ul class="list-disc list-outside ml-4 text-gray-700 dark:text-gray-300 text-sm space-y-2 leading-relaxed">
                                     <li>Investigated advection-dominated accretion flows around Schwarzschild black holes.</li>
                                     <li>Computed global transonic solutions via a magnetohydrodynamic framework.</li>
                                     <li>Analyzed the formation of shock waves, mass-loss effects, and post-shock corona properties.</li>
                                 </ul>
                             </div>
 
-                            <div class="pl-6 relative">
-                                <div class="absolute w-3 h-3 bg-gray-300 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
-                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                                    <h4 class="text-lg font-bold text-gray-900">Research Project</h4>
-                                    <span class="text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">2024</span>
+                            <div class="pl-8 relative group">
+                                <div class="absolute w-4 h-4 bg-white dark:bg-gray-800 border-4 border-gray-300 dark:border-gray-600 rounded-full -left-[9px] top-1 transition-transform group-hover:scale-125 duration-300"></div>
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+                                    <h4 class="text-xl font-bold text-gray-900 dark:text-white">Research Project</h4>
+                                    <span class="text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full mt-2 sm:mt-0">2024</span>
                                 </div>
-                                <p class="text-gray-600 font-medium text-sm mb-2">Indian Institute of Science, Bangalore | Prof. Justin R. David</p>
-                                <ul class="list-disc list-outside ml-4 text-gray-700 text-sm space-y-1">
+                                <p class="text-gray-600 dark:text-gray-400 font-medium text-sm mb-3">Indian Institute of Science, Bangalore | Supervisor: Prof. Justin R. David</p>
+                                <ul class="list-disc list-outside ml-4 text-gray-700 dark:text-gray-300 text-sm space-y-2 leading-relaxed">
                                     <li>Conducted an in-depth study of the Path Integral formulation of Quantum Mechanics.</li>
                                     <li>Linked kernels to physical observables utilizing both path integral and operator approaches.</li>
                                     <li>Calculated many-body partition functions.</li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
 
                     <!-- Extracurriculars & Workshops -->
-                    <div>
-                        <h3 class="text-xl font-serif font-bold text-primary-700 mb-4 flex items-center mt-10">
-                            <i class="fas fa-users mr-2 text-primary-500"></i> Workshops & Extracurriculars
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                            <i class="fas fa-users mr-3 text-primary-500"></i> Workshops & Extracurriculars
                         </h3>
                         
-                        <div class="space-y-4 ml-3">
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <div class="flex justify-between items-start mb-1">
-                                    <h4 class="font-bold text-gray-900">Equinox Astronomy Club</h4>
-                                    <span class="text-xs text-gray-500">IIT Guwahati</span>
+                        <div class="space-y-5">
+                            <div class="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-primary-200 dark:hover:border-primary-800 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-lg">Equinox Astronomy Club</h4>
+                                    <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-2 py-1 rounded">IIT Guwahati</span>
                                 </div>
-                                <p class="text-sm text-gray-600">Served as a Core Team member, pursuing astrophotography and organizing astronomy-related discussions and events on campus.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Served as a Core Team member, pursuing astrophotography and organizing astronomy-related discussions and events on campus.</p>
                             </div>
 
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <div class="flex justify-between items-start mb-1">
-                                    <h4 class="font-bold text-gray-900">Frontier Areas in Material Research</h4>
-                                    <span class="text-xs text-gray-500">2022</span>
+                            <div class="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-primary-200 dark:hover:border-primary-800 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-lg">Frontier Areas in Material Research</h4>
+                                    <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">2022</span>
                                 </div>
-                                <p class="text-sm text-gray-600">Participated in an advanced workshop conducted by the Indian Academy of Sciences.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Participated in an advanced workshop conducted by the Indian Academy of Sciences.</p>
                             </div>
                             
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <div class="flex justify-between items-start mb-1">
-                                    <h4 class="font-bold text-gray-900">Intl. Workshop Srinivasa Ramanujan: The man beyond infinity</h4>
-                                    <span class="text-xs text-gray-500">2020</span>
+                            <div class="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-primary-200 dark:hover:border-primary-800 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-lg pr-4">Srinivasa Ramanujan: The man beyond infinity</h4>
+                                    <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 flex-shrink-0">2020</span>
                                 </div>
-                                <p class="text-sm text-gray-600">Attended an online International Workshop organized by the Central University of Himachal Pradesh.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Attended an online International Workshop organized by the Central University of Himachal Pradesh.</p>
                             </div>
                         </div>
                     </div>
@@ -447,76 +500,95 @@
 
         <!-- ASTROPHOTOGRAPHY SECTION -->
         <section id="astrophotography" class="section-content">
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4 border-b pb-4">Astrophotography Gallery</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-gray-700 pb-4">Astrophotography Gallery</h2>
             
-            <p class="text-lg text-gray-700 mb-10 max-w-3xl">
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-10 max-w-3xl leading-relaxed">
                 A curated collection of my astrophotography. Through the lens of my telescope, I blend technical physics with the art of photography to capture the intricate details of deep-sky objects, lunar landscapes, and our neighboring planets.
             </p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Gallery Item 1 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-orion.jpg', 'The Orion Nebula (M42) - Captured during the winter observations. Shows vibrant star-forming regions.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-orion.jpg" alt="Orion Nebula" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-orion.jpg', 'The Orion Nebula (M42) - Captured during the winter observations. Shows vibrant star-forming regions.')">
+                    <!-- Added animate-pulse container for loading aesthetic -->
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-orion.jpg" alt="Orion Nebula" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/2dd4bf?text=Orion+Nebula'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">The Orion Nebula (M42)</h3>
-                        <p class="text-sm text-gray-500 mt-1">Captured during the winter observations. Shows vibrant star-forming regions.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">The Orion Nebula (M42)</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">Captured during the winter observations. Shows vibrant star-forming regions.</p>
                     </div>
                 </div>
 
                 <!-- Gallery Item 2 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-andromeda.jpg', 'Andromeda Galaxy (M31) - Our nearest major galactic neighbor, captured over a multi-hour exposure.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-andromeda.jpg" alt="Andromeda Galaxy" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-andromeda.jpg', 'Andromeda Galaxy (M31) - Our nearest major galactic neighbor, captured over a multi-hour exposure.')">
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-andromeda.jpg" alt="Andromeda Galaxy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/2dd4bf?text=Andromeda'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">Andromeda Galaxy (M31)</h3>
-                        <p class="text-sm text-gray-500 mt-1">Our nearest major galactic neighbor, captured over a multi-hour exposure.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Andromeda Galaxy (M31)</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">Our nearest major galactic neighbor, captured over a multi-hour exposure.</p>
                     </div>
                 </div>
 
                 <!-- Gallery Item 3 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-lunar.jpg', 'Lunar Terminator Details - High-resolution capture emphasizing crater depth and shadows along the terminator line.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-lunar.jpg" alt="Lunar Craters" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-lunar.jpg', 'Lunar Terminator Details - High-resolution capture emphasizing crater depth and shadows along the terminator line.')">
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-lunar.jpg" alt="Lunar Craters" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/e2e8f0?text=Lunar+Surface'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">Lunar Terminator Details</h3>
-                        <p class="text-sm text-gray-500 mt-1">High-resolution capture emphasizing crater depth and shadows along the terminator line.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Lunar Terminator Details</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">High-resolution capture emphasizing crater depth and shadows along the terminator line.</p>
                     </div>
                 </div>
 
                 <!-- Gallery Item 4 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-milkyway.jpg', 'Wide-field Nightsky - Wide-field astrophotography of the Milky Way, highlighting andromeda, dust lanes and nebula structures.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-milkyway.jpg" alt="Milky Way" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-milkyway.jpg', 'Wide-field Nightsky - Wide-field astrophotography of the Milky Way, highlighting andromeda, dust lanes and nebula structures.')">
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-milkyway.jpg" alt="Milky Way" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/2dd4bf?text=Milky+Way'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">Wide-field Nightsky</h3>
-                        <p class="text-sm text-gray-500 mt-1">Wide-field astrophotography of the Milky Way, highlighting andromeda, dust lanes and nebula structures.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Wide-field Nightsky</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">Wide-field astrophotography of the Milky Way, highlighting andromeda, dust lanes and nebula structures.</p>
                     </div>
                 </div>
                 
                 <!-- Gallery Item 5 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-jupiter.jpg', 'Jupiter & Galilean Moons - Planetary imaging capturing the atmospheric bands and the Great Red Spot.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-jupiter.jpg" alt="Jupiter" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-jupiter.jpg', 'Jupiter & Galilean Moons - Planetary imaging capturing the atmospheric bands and the Great Red Spot.')">
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-jupiter.jpg" alt="Jupiter" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/2dd4bf?text=Jupiter'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">Jupiter & Galilean Moons</h3>
-                        <p class="text-sm text-gray-500 mt-1">Planetary imaging capturing the atmospheric bands and the Great Red Spot.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Jupiter & Galilean Moons</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">Planetary imaging capturing the atmospheric bands and the Great Red Spot.</p>
                     </div>
                 </div>
 
                 <!-- Gallery Item 6 -->
-                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300" onclick="openModal('assets/astro-pleiades.jpg', 'The Pleiades (M45) - The famous Seven Sisters star cluster, revealing its surrounding reflection nebulosity.')">
-                    <div class="relative overflow-hidden h-64 bg-gray-900">
-                        <img src="assets/astro-pleiades.jpg" alt="Pleiades" class="w-full h-full object-cover transition duration-500">
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group" onclick="openModal('assets/astro-pleiades.jpg', 'The Pleiades (M45) - The famous Seven Sisters star cluster, revealing its surrounding reflection nebulosity.')">
+                    <div class="relative overflow-hidden h-64 bg-gray-200 dark:bg-gray-700">
+                        <img src="assets/astro-pleiades.jpg" alt="Pleiades" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" onerror="this.src='https://placehold.co/600x400/0f172a/2dd4bf?text=Pleiades'">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-expand text-white opacity-0 group-hover:opacity-100 text-3xl transform scale-50 group-hover:scale-100 transition-all duration-300"></i>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-bold text-gray-900">The Pleiades (M45)</h3>
-                        <p class="text-sm text-gray-500 mt-1">The famous Seven Sisters star cluster, revealing its surrounding reflection nebulosity.</p>
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">The Pleiades (M45)</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">The famous Seven Sisters star cluster, revealing its surrounding reflection nebulosity.</p>
                     </div>
                 </div>
             </div>
@@ -524,36 +596,36 @@
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="section-content">
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8 border-b pb-4">Get in Touch</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">Get in Touch</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <!-- Contact Info -->
                 <div>
-                    <p class="text-lg text-gray-700 mb-8">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
                         I am highly motivated to pursue research opportunities in Astrophysics and Cosmology. I welcome discussions regarding PhD positions, collaborations, or shared interests.
                     </p>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-8">
                         <div class="flex items-start">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mt-1">
-                                <i class="fas fa-envelope"></i>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center text-primary-600 dark:text-primary-400 mt-1 shadow-sm">
+                                <i class="fas fa-envelope text-xl"></i>
                             </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-medium text-gray-900">Email</h3>
-                                <p class="text-gray-600 mt-1">
-                                    <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="hover:text-primary-600 transition">t.chauhan@alumni.iitg.ac.in</a><br>
-                                    <a href="mailto:tanujchauhan17@gmail.com" class="hover:text-primary-600 transition">tanujchauhan17@gmail.com</a>
+                            <div class="ml-5">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Email</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mt-2 space-y-1 flex flex-col">
+                                    <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">t.chauhan@alumni.iitg.ac.in</a>
+                                    <a href="mailto:tanujchauhan17@gmail.com" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">tanujchauhan17@gmail.com</a>
                                 </p>
                             </div>
                         </div>
 
                         <div class="flex items-start">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mt-1">
-                                <i class="fas fa-building"></i>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center text-primary-600 dark:text-primary-400 mt-1 shadow-sm">
+                                <i class="fas fa-building text-xl"></i>
                             </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-medium text-gray-900">Institution</h3>
-                                <p class="text-gray-600 mt-1">
+                            <div class="ml-5">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Institution</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
                                     Department of Physics<br>
                                     Indian Institute of Technology, Guwahati<br>
                                     Assam, India
@@ -564,21 +636,21 @@
                 </div>
 
                 <!-- Contact Form -->
-                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
                     <form onsubmit="handleFormSubmit(event)" class="space-y-6">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border">
+                            <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                            <input type="text" id="name" name="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-3 border transition-colors">
                         </div>
                         
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                            <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border">
+                            <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-3 border transition-colors">
                         </div>
                         
                         <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
-                            <select id="subject" name="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border bg-white">
+                            <label for="subject" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Subject</label>
+                            <select id="subject" name="subject" class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-3 border transition-colors appearance-none">
                                 <option>Research Opportunity</option>
                                 <option>Academic Inquiry</option>
                                 <option>Collaboration</option>
@@ -587,19 +659,14 @@
                         </div>
 
                         <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border"></textarea>
+                            <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-3 border transition-colors resize-none"></textarea>
                         </div>
                         
                         <div>
-                            <button type="submit" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition">
+                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors transform hover:-translate-y-0.5">
                                 Send Message
                             </button>
-                        </div>
-                        
-                        <!-- Success Message Container -->
-                        <div id="form-success" class="hidden mt-4 p-3 rounded-md text-sm text-center">
-                            <!-- Message will be injected via JS -->
                         </div>
                     </form>
                 </div>
@@ -610,18 +677,23 @@
 
     <!-- The Image Modal -->
     <div id="image-modal" class="hidden">
-        <span id="image-modal-close" onclick="closeModal()">&times;</span>
+        <span id="image-modal-close" onclick="closeModal()"><i class="fas fa-times"></i></span>
         <img id="image-modal-content">
         <div id="image-modal-caption"></div>
     </div>
 
+    <!-- Back to Top Button -->
+    <button id="btt-btn" onclick="scrollToTop()" class="fixed bottom-8 right-8 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transform hover:-translate-y-1 transition-all duration-300 opacity-0 pointer-events-none z-40" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-500 text-sm">
+    <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors duration-300">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 dark:text-gray-400 text-sm">
                 &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
             </p>
-            <p class="text-gray-400 text-sm mt-2 md:mt-0">
+            <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 md:mt-0 font-medium tracking-wide">
                 Designed for academia.
             </p>
         </div>
@@ -631,6 +703,28 @@
     <script>
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Dark Mode Logic
+        const themeIcon = document.getElementById('theme-toggle-icon');
+        
+        function updateThemeIcon() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        updateThemeIcon(); // Initial set
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        }
 
         // Handle navigation
         function showSection(sectionId) {
@@ -646,9 +740,21 @@
                 target.classList.add('active');
             }
 
-            // Update nav links highlighting
+            // Update desktop nav links highlighting
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
+                if(link.getAttribute('data-target') === sectionId) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            // Update mobile nav links highlighting
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileLinks.forEach(link => {
                 if(link.getAttribute('data-target') === sectionId) {
                     link.classList.add('active');
                 } else {
@@ -658,6 +764,9 @@
 
             // Scroll to top when changing sections
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update URL hash without jumping
+            history.pushState(null, null, '#' + sectionId);
         }
 
         // Mobile menu toggle
@@ -668,18 +777,18 @@
             menu.classList.toggle('hidden');
         }
 
-        btn.addEventListener('click', toggleMobileMenu);
-
-        // Toggle Bibtex code blocks (Left in place if needed in the future)
-        function toggleBibtex(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                if (el.classList.contains('hidden')) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
-                }
+        // Back to Top Button Logic
+        const bttBtn = document.getElementById('btt-btn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                bttBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                bttBtn.classList.add('opacity-0', 'pointer-events-none');
             }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Image Modal Functions
@@ -688,46 +797,55 @@
             const modalImg = document.getElementById("image-modal-content");
             const caption = document.getElementById("image-modal-caption");
 
-            modal.style.display = "block";
+            modal.style.display = "flex"; // Changed from block to flex for better centering
+            modal.style.flexDirection = "column";
+            modal.style.justifyContent = "center";
+            
             modalImg.src = imageSrc;
             caption.innerHTML = captionText;
+            
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
             const modal = document.getElementById("image-modal");
             modal.style.display = "none";
+            // Restore body scroll
+            document.body.style.overflow = "auto";
         }
 
         // Close modal when clicking outside the image
         window.onclick = function(event) {
             const modal = document.getElementById("image-modal");
             if (event.target == modal) {
-                modal.style.display = "none";
+                closeModal();
             }
         }
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
 
-        // Handle form submission (Fallback using mailto since FormSubmit is down)
+        // Handle form submission
         function handleFormSubmit(e) {
             e.preventDefault();
             
-            // Get form values
             const name = document.getElementById('name').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Construct the email body
             const emailBody = `Hello, my name is ${name}.%0D%0A%0D%0A${message.replace(/\n/g, '%0D%0A')}`;
-            
-            // Create the mailto link
             const mailtoLink = `mailto:tanujchauhan17@gmail.com?subject=${encodeURIComponent('Portfolio Contact: ' + subject)}&body=${emailBody}`;
             
-            // Open the user's default email client
             window.location.href = mailtoLink;
             
-            // Show a redirect state on the button
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Redirecting to Email...';
+            btn.innerHTML = '<i class="fas fa-check mr-2"></i> Redirecting...';
             
             setTimeout(() => {
                 btn.innerHTML = originalText;
@@ -735,7 +853,7 @@
             }, 3000);
         }
 
-        // Handle initial load based on URL hash (if someone links directly to a section)
+        // Handle initial load based on URL hash
         window.addEventListener('load', () => {
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
