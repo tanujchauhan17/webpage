@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanuj Chauhan | M.Sc. Physics, IIT Guwahati</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6', // Teal main
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        },
+                        dark: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for the SPA navigation */
+        .section-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .section-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-link.active {
+            color: #0d9488; /* Tailwind primary-600 */
+            border-bottom: 2px solid #0d9488;
+        }
+
+        /* Publication styling */
+        .pub-year {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+        
+        /* Gallery image hover effect */
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" onclick="showSection('home')" class="text-xl font-bold text-gray-900 font-serif tracking-tight">Tanuj Chauhan</a>
+                </div>
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <button onclick="showSection('home')" class="nav-link active text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="home">Home</button>
+                    <button onclick="showSection('research')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="research">Research</button>
+                    <button onclick="showSection('publications')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="publications">Publications</button>
+                    <button onclick="showSection('cv')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="cv">CV</button>
+                    <button onclick="showSection('astrophotography')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="astrophotography">Astrophotography</button>
+                    <button onclick="showSection('contact')" class="nav-link text-gray-600 hover:text-primary-600 px-1 py-2 font-medium transition-colors" data-target="contact">Contact</button>
+                </nav>
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="showSection('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Home</button>
+                <button onclick="showSection('research'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Research</button>
+                <button onclick="showSection('publications'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Publications</button>
+                <button onclick="showSection('cv'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">CV</button>
+                <button onclick="showSection('astrophotography'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Astrophotography</button>
+                <button onclick="showSection('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Contact</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="section-content active">
+            <div class="flex flex-col md:flex-row gap-10 items-start">
+                <!-- Profile Image & Quick Links -->
+                <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
+                    <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg mb-6 relative">
+                        <!-- Placeholder for Profile Picture -->
+                        <img src="https://placehold.co/400x400/e2e8f0/475569?text=Tanuj+Chauhan" alt="Tanuj Chauhan" class="w-full h-full object-cover">
+                    </div>
+                    <h1 class="text-3xl font-serif font-bold text-gray-900 mb-2">Tanuj Chauhan</h1>
+                    <p class="text-lg text-primary-600 font-medium mb-1">M.Sc. Physics</p>
+                    <p class="text-gray-600 mb-6">Department of Physics<br>Indian Institute of Technology, Guwahati</p>
+                    
+                    <div class="flex space-x-4 mb-8">
+                        <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="text-gray-500 hover:text-red-500 transition" aria-label="Email"><i class="fa-solid fa-envelope fa-lg"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-blue-800 transition" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-gray-900 transition" aria-label="GitHub"><i class="fa-brands fa-github fa-lg"></i></a>
+                    </div>
+                    
+                    <a href="#" onclick="showSection('cv')" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition w-full md:w-auto shadow-sm">
+                        <i class="fas fa-file-pdf mr-2"></i> View CV
+                    </a>
+                </div>
+                
+                <!-- About Content -->
+                <div class="w-full md:w-2/3 prose prose-lg prose-teal max-w-none text-gray-700">
+                    <h2 class="text-2xl font-serif font-bold text-gray-900 mb-4 border-b pb-2">Profile</h2>
+                    <p class="mb-4">
+                        Hello! I recently completed my Masters in Physics from the <a href="#" class="text-primary-600 hover:underline">Department of Physics</a> at the Indian Institute of Technology, Guwahati. I am passionate about understanding the underlying laws of the universe and am particularly interested in the fields of cosmology, general relativity, and astrophysics.
+                    </p>
+                    <p class="mb-4">
+                        With my strong background in programming, mathematical physics, and theoretical physics, I aspire to pursue dedicated research in the field of Astrophysics and am ready to devote myself completely to this purpose.
+                    </p>
+                    <p class="mb-6">
+                        Prior to IIT Guwahati, I received my B.Sc. in Physics from Himachal Pradesh University, securing the 1st position in Mathematics in my final year.
+                    </p>
+
+                    <h3 class="text-xl font-serif font-bold text-gray-900 mb-3 mt-8">Recent Updates</h3>
+                    <ul class="space-y-3 list-none p-0">
+                        <li class="flex items-start border-l-4 border-primary-500 bg-gray-50 p-3 rounded-r-md">
+                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2026</span>
+                            <span>Qualified <strong>JEST Physics</strong> with an <strong>AIR 83</strong> and <strong>GATE Physics</strong> with AIR 94.</span>
+                        </li>
+                        <li class="flex items-start border-l-4 border-gray-300 p-3">
+                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2025</span>
+                            <span>Completed my Master's Dissertation investigating <strong>Magnetohydrodynamics in Accretion Flows</strong> under Prof. Santabrata Das. Graduated with an M.Sc. in Physics from IIT Guwahati.</span>
+                        </li>
+                        <li class="flex items-start border-l-4 border-gray-300 p-3">
+                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2024</span>
+                            <span>Conducted research on the <strong>Path Integral Formulation of Quantum Mechanics</strong> under Prof. Justin R. David at IISc Bangalore.</span>
+                        </li>
+                        <li class="flex items-start border-l-4 border-gray-300 p-3">
+                            <span class="text-sm font-semibold text-gray-500 w-24 flex-shrink-0 mt-0.5">2023</span>
+                            <span>Qualified <strong>IIT JAM Physics</strong> with <strong>AIR 258</strong>. Ranked 1st in Mathematics during B.Sc. III.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESEARCH SECTION -->
+        <section id="research" class="section-content">
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8 border-b pb-4">Research Interests & Projects</h2>
+            
+            <p class="text-lg text-gray-700 mb-10 max-w-3xl">
+                I am keenly interested in cosmology, astrophysics, and relativity. My academic projects involve utilizing mathematical and theoretical physics alongside computational methods to analyze complex astrophysical phenomena and quantum systems.
+            </p>
+
+            <div class="space-y-12">
+                <!-- Project 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 hover:shadow-md transition">
+                    <div class="w-full md:w-1/3 h-48 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                         <img src="https://placehold.co/600x400/1e293b/ffffff?text=Black+Hole+MHD" alt="Project 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Magnetohydrodynamics in Accretion Flows</h3>
+                        <div class="flex gap-2 mb-3">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">Astrophysics</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Black Holes</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Investigated the global structure of advection-dominated accretion flows around Schwarzschild black holes using a magnetohydrodynamic (MHD) framework. Computed global transonic solutions to analyze the formation of centrifugally supported shock waves, mass-loss effects, and post-shock corona properties under the influence of radiative cooling and toroidal magnetic fields.
+                        </p>
+                        <p class="text-sm font-medium text-gray-500">Supervisor: Prof. Santabrata Das, IIT Guwahati</p>
+                        <div class="flex flex-wrap gap-3 mt-5">
+                            <a href="#" class="inline-flex items-center text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 px-3 py-1.5 rounded transition shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i> Report PDF</a>
+                            <a href="#" class="inline-flex items-center text-xs font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded transition shadow-sm"><i class="fab fa-github mr-1.5 text-black"></i> GitHub Repository</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 hover:shadow-md transition">
+                    <div class="w-full md:w-1/3 h-48 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                         <img src="https://placehold.co/600x400/0f766e/ffffff?text=Quantum+Path+Integrals" alt="Project 2" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Path Integral Formulation of Quantum Mechanics</h3>
+                        <div class="flex gap-2 mb-3">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Quantum Mechanics</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">Theoretical Physics</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Analyzed quantum systems using path integral and operator approaches to link kernels to physical observables and calculate many-body partition functions. This work explored foundational concepts bridging classical trajectories with quantum probability amplitudes.
+                        </p>
+                        <p class="text-sm font-medium text-gray-500">Supervisor: Prof. Justin R. David, IISc Bangalore</p>
+                        <div class="flex flex-wrap gap-3 mt-5">
+                            <a href="#" class="inline-flex items-center text-xs font-medium text-white bg-gray-800 hover:bg-gray-900 px-3 py-1.5 rounded transition shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i> Report PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUBLICATIONS SECTION -->
+        <section id="publications" class="section-content">
+            <div class="flex justify-between items-end mb-8 border-b pb-4">
+                <h2 class="text-3xl font-serif font-bold text-gray-900">Publications & Reports</h2>
+            </div>
+            
+            <p class="text-sm text-gray-500 mb-8">Selected major academic reports and dissertation work.</p>
+
+            <div class="space-y-10">
+                <!-- 2025 -->
+                <div class="flex">
+                    <div class="w-12 flex-shrink-0 hidden sm:block">
+                        <span class="text-xl font-bold text-gray-300 transform -rotate-90 block mt-6">2025</span>
+                    </div>
+                    <div class="flex-grow space-y-6 sm:border-l-2 sm:border-gray-200 sm:pl-6">
+                        
+                        <!-- Paper Item -->
+                        <div class="relative group">
+                            <div class="absolute -left-[33px] top-2 w-4 h-4 rounded-full bg-white border-2 border-primary-500 hidden sm:block group-hover:bg-primary-500 transition-colors"></div>
+                            <h3 class="text-lg font-bold text-gray-900 leading-snug">Study of Magnetohydrodynamics in Accretion Flow around Black Holes</h3>
+                            <p class="text-gray-700 mt-1">
+                                <strong>Tanuj Chauhan</strong>, Advised by Prof. Santabrata Das
+                            </p>
+                            <p class="text-gray-600 italic text-sm mt-1">
+                                Master's Dissertation, Indian Institute of Technology, Guwahati
+                            </p>
+                            <div class="flex gap-3 mt-3">
+                                <a href="#" class="text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded transition"><i class="fas fa-file-pdf mr-1"></i> Report PDF</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="flex">
+                    <div class="w-12 flex-shrink-0 hidden sm:block">
+                        <span class="text-xl font-bold text-gray-300 transform -rotate-90 block mt-6">2024</span>
+                    </div>
+                    <div class="flex-grow space-y-6 sm:border-l-2 sm:border-gray-200 sm:pl-6">
+                        
+                        <!-- Paper Item -->
+                        <div class="relative group">
+                            <div class="absolute -left-[33px] top-2 w-4 h-4 rounded-full bg-white border-2 border-gray-300 hidden sm:block group-hover:border-primary-500 transition-colors"></div>
+                            <h3 class="text-lg font-bold text-gray-900 leading-snug">Path Integral Formulation of Quantum Mechanics</h3>
+                            <p class="text-gray-700 mt-1">
+                                <strong>Tanuj Chauhan</strong>, Advised by Prof. Justin R. David
+                            </p>
+                            <p class="text-gray-600 italic text-sm mt-1">
+                                Project Report, Indian Institute of Science, Bangalore.
+                            </p>
+                            <div class="flex gap-3 mt-3">
+                                <a href="#" class="text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded transition"><i class="fas fa-file-pdf mr-1"></i> Report PDF</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV SECTION -->
+        <section id="cv" class="section-content">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h2 class="text-3xl font-serif font-bold text-gray-900">Curriculum Vitae</h2>
+                <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition">
+                    <i class="fas fa-download mr-2"></i> Full CV (PDF)
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Sidebar (Skills, etc) -->
+                <div class="md:col-span-1 space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Education</h3>
+                        <div class="mb-4">
+                            <p class="font-bold text-gray-800">M.Sc. in Physics</p>
+                            <p class="text-gray-600 text-sm">IIT Guwahati</p>
+                            <p class="text-gray-500 text-xs">2023 - 2025</p>
+                            <p class="text-gray-500 text-xs italic mt-1">CGPA: 7.78</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="font-bold text-gray-800">B.Sc. in Physics</p>
+                            <p class="text-gray-600 text-sm">Himachal Pradesh University</p>
+                            <p class="text-gray-500 text-xs">2020 - 2023</p>
+                            <p class="text-gray-500 text-xs italic mt-1">CGPA: 8.91 (1st in Mathematics)</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-800">Senior Secondary</p>
+                            <p class="text-gray-600 text-sm">CBSE (Physical Science)</p>
+                            <p class="text-gray-500 text-xs">2019</p>
+                            <p class="text-gray-500 text-xs italic mt-1">88.2%</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Skills</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700 mb-1">Languages</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Python</span>
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">FORTRAN</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700 mb-1">Key Courses</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Electrodynamics</span>
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Quantum Mechanics</span>
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Relativity</span>
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Linear Algebra</span>
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Numerical Methods</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 uppercase tracking-wider text-sm">Competitive Exams</h3>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li><span class="font-semibold">JEST Physics (AIR 83)</span> <span class="text-gray-500 text-xs float-right">2026</span></li>
+                            <li><span class="font-semibold">GATE Physics (AIR 94)</span> <span class="text-gray-500 text-xs float-right">2026</span></li>
+                            <li><span class="font-semibold">JEST Physics (AIR 351)</span> <span class="text-gray-500 text-xs float-right">2025</span></li>
+                            <li><span class="font-semibold">IIT JAM Physics (AIR 258)</span> <span class="text-gray-500 text-xs float-right">2023</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main CV Content -->
+                <div class="md:col-span-2 space-y-8">
+                    
+                    <!-- Experience -->
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-primary-700 mb-4 flex items-center">
+                            <i class="fas fa-microscope mr-2 text-primary-500"></i> Research Experience
+                        </h3>
+                        
+                        <div class="relative border-l-2 border-gray-200 ml-3 space-y-6">
+                            
+                            <div class="pl-6 relative">
+                                <div class="absolute w-3 h-3 bg-primary-500 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                                    <h4 class="text-lg font-bold text-gray-900">Master's Dissertation Researcher</h4>
+                                    <span class="text-sm font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded">2024 - 2025</span>
+                                </div>
+                                <p class="text-gray-600 font-medium text-sm mb-2">Indian Institute of Technology, Guwahati | Prof. Santabrata Das</p>
+                                <ul class="list-disc list-outside ml-4 text-gray-700 text-sm space-y-1">
+                                    <li>Investigated advection-dominated accretion flows around Schwarzschild black holes.</li>
+                                    <li>Computed global transonic solutions via a magnetohydrodynamic framework.</li>
+                                    <li>Analyzed the formation of shock waves, mass-loss effects, and post-shock corona properties.</li>
+                                </ul>
+                            </div>
+
+                            <div class="pl-6 relative">
+                                <div class="absolute w-3 h-3 bg-gray-300 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                                    <h4 class="text-lg font-bold text-gray-900">Research Project</h4>
+                                    <span class="text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">2024</span>
+                                </div>
+                                <p class="text-gray-600 font-medium text-sm mb-2">Indian Institute of Science, Bangalore | Prof. Justin R. David</p>
+                                <ul class="list-disc list-outside ml-4 text-gray-700 text-sm space-y-1">
+                                    <li>Conducted an in-depth study of the Path Integral formulation of Quantum Mechanics.</li>
+                                    <li>Linked kernels to physical observables utilizing both path integral and operator approaches.</li>
+                                    <li>Calculated many-body partition functions.</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Extracurriculars & Workshops -->
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-primary-700 mb-4 flex items-center mt-10">
+                            <i class="fas fa-users mr-2 text-primary-500"></i> Workshops & Extracurriculars
+                        </h3>
+                        
+                        <div class="space-y-4 ml-3">
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-gray-900">Equinox Astronomy Club</h4>
+                                    <span class="text-xs text-gray-500">IIT Guwahati</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Served as a Core Team member, pursuing astrophotography and organizing astronomy-related discussions and events on campus.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-gray-900">Frontier Areas in Material Research</h4>
+                                    <span class="text-xs text-gray-500">2022</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Participated in an advanced workshop conducted by the Indian Academy of Sciences.</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-gray-900">Intl. Workshop Srinivasa Ramanujan: The man beyond infinity</h4>
+                                    <span class="text-xs text-gray-500">2020</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Attended an online International Workshop organized by the Central University of Himachal Pradesh.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ASTROPHOTOGRAPHY SECTION -->
+        <section id="astrophotography" class="section-content">
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4 border-b pb-4">Astrophotography Gallery</h2>
+            
+            <p class="text-lg text-gray-700 mb-10 max-w-3xl">
+                A curated collection of my astrophotography. Through the lens of my telescope, I blend technical physics with the art of photography to capture the intricate details of deep-sky objects, lunar landscapes, and our neighboring planets.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/0b0c10/ffffff?text=Orion+Nebula" alt="Orion Nebula" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">The Orion Nebula (M42)</h3>
+                        <p class="text-sm text-gray-500 mt-1">Captured during the winter observations. Shows vibrant star-forming regions.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/1f2833/ffffff?text=Andromeda+Galaxy" alt="Andromeda Galaxy" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">Andromeda Galaxy (M31)</h3>
+                        <p class="text-sm text-gray-500 mt-1">Our nearest major galactic neighbor, captured over a multi-hour exposure.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/0d1117/ffffff?text=Lunar+Craters" alt="Lunar Craters" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">Lunar Terminator Details</h3>
+                        <p class="text-sm text-gray-500 mt-1">High-resolution capture emphasizing crater depth and shadows along the terminator line.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/161b22/ffffff?text=Milky+Way+Core" alt="Milky Way Core" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">Galactic Center</h3>
+                        <p class="text-sm text-gray-500 mt-1">Wide-field astrophotography of the Milky Way core, highlighting dust lanes and nebula structures.</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/010409/ffffff?text=Jupiter+&+Moons" alt="Jupiter" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">Jupiter & Galilean Moons</h3>
+                        <p class="text-sm text-gray-500 mt-1">Planetary imaging capturing the atmospheric bands and the Great Red Spot.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 transition duration-300">
+                    <div class="relative overflow-hidden h-64 bg-gray-900">
+                        <img src="https://placehold.co/600x600/0d1117/ffffff?text=Pleiades" alt="Pleiades" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900">The Pleiades (M45)</h3>
+                        <p class="text-sm text-gray-500 mt-1">The famous Seven Sisters star cluster, revealing its surrounding reflection nebulosity.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 bg-blue-50 border border-blue-100 rounded-lg p-5 flex items-start gap-4">
+                <i class="fas fa-info-circle text-blue-500 text-xl mt-0.5"></i>
+                <p class="text-sm text-blue-800">
+                    <strong>Note to visitors:</strong> The images currently shown are placeholders. You can replace the image source (`src`) tags in the HTML with paths to your actual astrophotography captures to bring this gallery to life!
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="section-content">
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-8 border-b pb-4">Get in Touch</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div>
+                    <p class="text-lg text-gray-700 mb-8">
+                        I am highly motivated to pursue research opportunities in Astrophysics and Cosmology. I welcome discussions regarding PhD positions, collaborations, or shared interests.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Email</h3>
+                                <p class="text-gray-600 mt-1">
+                                    <a href="mailto:t.chauhan@alumni.iitg.ac.in" class="hover:text-primary-600 transition">t.chauhan@alumni.iitg.ac.in</a><br>
+                                    <a href="mailto:tanujchauhan17@gmail.com" class="hover:text-primary-600 transition">tanujchauhan17@gmail.com</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mt-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Phone</h3>
+                                <p class="text-gray-600 mt-1">
+                                    +91-8219983335
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mt-1">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Institution</h3>
+                                <p class="text-gray-600 mt-1">
+                                    Department of Physics<br>
+                                    Indian Institute of Technology, Guwahati<br>
+                                    Assam, India
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                            <select id="subject" name="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border bg-white">
+                                <option>Research Opportunity</option>
+                                <option>Academic Inquiry</option>
+                                <option>Collaboration</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2 border"></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition">
+                                Send Message
+                            </button>
+                        </div>
+                        
+                        <!-- Success Message Container -->
+                        <div id="form-success" class="hidden mt-4 p-3 bg-green-50 text-green-700 rounded-md text-sm text-center">
+                            Message sent successfully! (Simulated)
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm">
+                &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
+            </p>
+            <p class="text-gray-400 text-sm mt-2 md:mt-0">
+                Designed for academia.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for SPA navigation and interactivity -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Handle navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show target section
+            const target = document.getElementById(sectionId);
+            if(target) {
+                target.classList.add('active');
+            }
+
+            // Update nav links highlighting
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if(link.getAttribute('data-target') === sectionId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Scroll to top when changing sections
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            menu.classList.toggle('hidden');
+        }
+
+        btn.addEventListener('click', toggleMobileMenu);
+
+        // Toggle Bibtex code blocks (Left in place if needed in the future)
+        function toggleBibtex(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                if (el.classList.contains('hidden')) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            }
+        }
+
+        // Handle form submission (simulation)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            // Loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            // Simulate network request
+            setTimeout(() => {
+                e.target.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                const successMsg = document.getElementById('form-success');
+                successMsg.classList.remove('hidden');
+                
+                // Hide success message after a few seconds
+                setTimeout(() => {
+                    successMsg.classList.add('hidden');
+                }, 4000);
+            }, 1000);
+        }
+
+        // Handle initial load based on URL hash (if someone links directly to a section)
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showSection(hash);
+            }
+        });
+    </script>
+</body>
+</html>
