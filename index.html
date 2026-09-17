@@ -714,13 +714,20 @@
 
     <!-- Footer -->
     <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors duration-300">
-        <div class="w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-500 dark:text-gray-400 text-sm">
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 dark:text-gray-400 text-sm text-center md:text-left">
                 &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
             </p>
-            <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 md:mt-0 font-medium tracking-wide">
-                Designed for academia.
-            </p>
+            <div class="flex flex-col items-center md:items-end gap-3">
+                <p class="text-gray-400 dark:text-gray-500 text-sm font-medium tracking-wide">
+                    Designed for academia.
+                </p>
+                <!-- Visitor Counter UI -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs font-semibold border border-primary-100 dark:border-primary-800/50 shadow-sm transition-colors" title="Total Website Visits">
+                    <i class="fas fa-eye opacity-75"></i>
+                    <span>Visits: <span id="visit-counter">Loading...</span></span>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -913,6 +920,24 @@
                 showSection(hash);
             }
         });
+
+        // --- Website Visit Counter Logic ---
+        (function() {
+            // Paste your existing Google Web App URL below
+            const webAppUrl = "https://script.google.com/macros/s/AKfycbzqZQRnPGiRUuexj4X2Zb3NfG6jeRiBqopOhMpEPNbJrex7JIDSb-tAUPDT3zndHI0/exec"; 
+            
+            // Fetch the live data from Google Sheets
+            fetch(webAppUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Update the page with the real-time count, adding commas for large numbers
+                    document.getElementById("visit-counter").innerText = data.count.toLocaleString();
+                })
+                .catch(err => {
+                    console.error("Error loading counter:", err);
+                    document.getElementById("visit-counter").innerText = "---";
+                });
+        })();
     </script>
 </body>
 </html>
