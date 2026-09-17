@@ -714,19 +714,36 @@
 
     <!-- Footer -->
     <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors duration-300">
-        <div class="w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-gray-500 dark:text-gray-400 text-sm text-center md:text-left">
-                &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
-            </p>
-            <div class="flex flex-col items-center md:items-end gap-3">
-                <p class="text-gray-400 dark:text-gray-500 text-sm font-medium tracking-wide">
-                    Designed for academia.
-                </p>
-                <!-- Visitor Counter UI -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs font-semibold border border-primary-100 dark:border-primary-800/50 shadow-sm transition-colors" title="Total Website Visits">
-                    <i class="fas fa-eye opacity-75"></i>
-                    <span>Visits: <span id="visit-counter">Loading...</span></span>
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+                
+                <!-- Left: Copyright & Extra Text combined -->
+                <div class="flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-4 text-center md:text-left">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">
+                        &copy; <span id="year"></span> Tanuj Chauhan. All rights reserved.
+                    </p>
+                    <span class="hidden md:inline text-gray-300 dark:text-gray-700">|</span>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm font-medium tracking-wide">
+                        Designed for academia.
+                    </p>
                 </div>
+                
+                <!-- Right: Visitor Counter (with pr-16 to dodge the floating button on desktop) -->
+                <div class="flex items-center justify-center md:justify-end md:pr-16">
+                    <div class="flex items-center gap-2" title="Total Website Visits">
+                        <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest"><i class="fas fa-eye mr-1"></i> Visits</span>
+                        <div id="visit-counter" class="flex items-center font-mono text-sm bg-primary-50 dark:bg-gray-800 p-0.5 rounded border border-primary-100 dark:border-gray-700 shadow-inner">
+                            <!-- Initial Loading State (6 Dashes) -->
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                            <span class="inline-block bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 px-1.5 py-px mx-[1px] rounded-sm shadow-sm">-</span>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </footer>
@@ -923,20 +940,69 @@
 
         // --- Website Visit Counter Logic ---
         (function() {
-            // Paste your existing Google Web App URL below
+            // IMPORTANT: Replace this with your actual Google Web App URL!
             const webAppUrl = "https://script.google.com/macros/s/AKfycbzqZQRnPGiRUuexj4X2Zb3NfG6jeRiBqopOhMpEPNbJrex7JIDSb-tAUPDT3zndHI0/exec"; 
             
-            // Fetch the live data from Google Sheets
-            fetch(webAppUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // Update the page with the real-time count, adding commas for large numbers
-                    document.getElementById("visit-counter").innerText = data.count.toLocaleString();
-                })
-                .catch(err => {
-                    console.error("Error loading counter:", err);
-                    document.getElementById("visit-counter").innerText = "---";
-                });
+            const counterContainer = document.getElementById("visit-counter");
+            
+            // 1. Build the physical rolling strips (0-9) for each digit
+            function buildOdometer() {
+                let html = '';
+                for (let i = 0; i < 6; i++) {
+                    html += `
+                    <div class="relative overflow-hidden w-[14px] h-[18px] mx-[1px] bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 rounded-[2px] shadow-sm">
+                        <div class="digit-strip absolute top-0 left-0 flex flex-col w-full transition-transform duration-[2500ms]" style="transition-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1); transform: translateY(0%);">
+                            ${[0,1,2,3,4,5,6,7,8,9].map(n => `<span class="flex items-center justify-center h-[18px] leading-none">${n}</span>`).join('')}
+                        </div>
+                    </div>`;
+                }
+                return html;
+            }
+
+            // Immediately set the counter to 000000 visually
+            counterContainer.innerHTML = buildOdometer();
+
+            // 2. Function to fetch and update the counter
+            function updateCounter(isPoll = false) {
+                // If polling, append ?action=poll so Google Sheet doesn't log a new row
+                const fetchUrl = isPoll ? webAppUrl + "?action=poll" : webAppUrl;
+
+                fetch(fetchUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const targetCount = data.count || 0;
+                        const countStr = targetCount.toString().padStart(6, '0');
+                        const strips = counterContainer.querySelectorAll('.digit-strip');
+                        
+                        for (let i = 0; i < 6; i++) {
+                            const digit = parseInt(countStr[i], 10);
+                            
+                            // Stagger animation only on first load. During live updates, roll them immediately.
+                            strips[i].style.transitionDelay = isPoll ? '0ms' : `${(5 - i) * 150}ms`; 
+                            
+                            // Translating down by (digit * 10%) of the strip's total height
+                            strips[i].style.transform = `translateY(-${digit * 10}%)`;
+                        }
+                    })
+                    .catch(err => {
+                        if (!isPoll) { // Only show error if the initial load fails
+                            console.error("Error loading counter:", err);
+                            counterContainer.innerHTML = '<span class="text-red-500 text-[10px] font-bold px-2">ERR</span>';
+                        }
+                    });
+            }
+
+            // 3. Initial load: Wait 50ms for DOM to paint, run the animation, and log the visit
+            setTimeout(() => {
+                updateCounter(false);
+            }, 50);
+
+            // 4. Background Polling: Update every 10 seconds, but ONLY if the tab is actively visible!
+            setInterval(() => {
+                if (document.visibilityState === 'visible') {
+                    updateCounter(true);
+                }
+            }, 10000); // 10000 ms = 10 seconds
         })();
     </script>
 </body>
