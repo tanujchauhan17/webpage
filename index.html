@@ -943,6 +943,7 @@
             const webAppUrl = "https://script.google.com/macros/s/AKfycbzqZQRnPGiRUuexj4X2Zb3NfG6jeRiBqopOhMpEPNbJrex7JIDSb-tAUPDT3zndHI0/exec"; 
             
             const counterContainer = document.getElementById("visit-counter");
+            const storageKey = 'tanuj_visit_count';
             
             // 1. Build the physical rolling strips (0-9) for each digit
             function buildOdometer() {
@@ -950,7 +951,7 @@
                 for (let i = 0; i < 6; i++) {
                     html += `
                     <div class="relative overflow-hidden w-[14px] h-[18px] mx-[1px] bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 font-bold border border-primary-200 dark:border-gray-900 rounded-[2px] shadow-sm">
-                        <div class="digit-strip absolute top-0 left-0 flex flex-col w-full transition-transform duration-[2500ms]" style="transition-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1); transform: translateY(0%);">
+                        <div class="digit-strip absolute top-0 left-0 flex flex-col w-full" style="transform: translateY(0%);">
                             ${[0,1,2,3,4,5,6,7,8,9].map(n => `<span class="flex items-center justify-center h-[18px] leading-none">${n}</span>`).join('')}
                         </div>
                     </div>`;
@@ -958,41 +959,63 @@
                 return html;
             }
 
-            // Immediately set the counter to 000000 visually
-            counterContainer.innerHTML = buildOdometer();
-
-            // 2. Function to fetch and update the counter (only on page load now)
-            function updateCounter() {
-                fetch(webAppUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        const targetCount = data.count || 0;
-                        const countStr = targetCount.toString().padStart(6, '0');
-                        const strips = counterContainer.querySelectorAll('.digit-strip');
-                        
-                        for (let i = 0; i < 6; i++) {
-                            const digit = parseInt(countStr[i], 10);
-                            
-                            // Stagger animation on first load
-                            strips[i].style.transitionDelay = `${(5 - i) * 150}ms`; 
-                            
-                            // Translating down by (digit * 10%) of the strip's total height
-                            strips[i].style.transform = `translateY(-${digit * 10}%)`;
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Error loading counter:", err);
-                        counterContainer.innerHTML = '<span class="text-red-500 text-[10px] font-bold px-2">ERR</span>';
-                    });
+            // 2. Set the odometer visually
+            function setOdometer(count, animate = true) {
+                const countStr = count.toString().padStart(6, '0');
+                const strips = counterContainer.querySelectorAll('.digit-strip');
+                
+                for (let i = 0; i < 6; i++) {
+                    const digit = parseInt(countStr[i], 10);
+                    
+                    if (animate) {
+                        strips[i].style.transition = 'transform 2500ms cubic-bezier(0.2, 0.9, 0.3, 1)';
+                        strips[i].style.transitionDelay = `${(5 - i) * 150}ms`; 
+                    } else {
+                        strips[i].style.transition = 'none';
+                        strips[i].style.transitionDelay = '0ms'; 
+                    }
+                    
+                    strips[i].style.transform = `translateY(-${digit * 10}%)`;
+                }
             }
 
-            // 3. Initial load: Wait 50ms for DOM to paint, run the animation, and log the visit
-            setTimeout(() => {
-                updateCounter();
-            }, 50);
+            // 3. Check for cached count to show instantly
+            const cachedCount = localStorage.getItem(storageKey);
+            let hasRenderedOdometer = false;
 
-            // Note: The 10-second polling interval has been removed. 
-            // The counter will now only update when the user refreshes or reloads the page.
+            if (cachedCount) {
+                // Render instantly with cached value
+                counterContainer.innerHTML = buildOdometer();
+                hasRenderedOdometer = true;
+                // Force a synchronous layout computation to apply 'none' transition instantly
+                counterContainer.offsetHeight; 
+                setOdometer(parseInt(cachedCount, 10), false); 
+            }
+
+            // 4. Fetch the real current count in the background (runs once per page load)
+            fetch(webAppUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const targetCount = data.count || 0;
+                    localStorage.setItem(storageKey, targetCount);
+                    
+                    if (!hasRenderedOdometer) {
+                        // First time ever: replace dashes loading state with odometer
+                        counterContainer.innerHTML = buildOdometer();
+                        counterContainer.offsetHeight; // Force layout
+                    }
+                    
+                    // Small delay to allow CSS to register the new elements before transitioning
+                    setTimeout(() => {
+                        setOdometer(targetCount, true);
+                    }, 50);
+                })
+                .catch(err => {
+                    console.error("Error loading counter:", err);
+                    if (!hasRenderedOdometer) {
+                        counterContainer.innerHTML = '<span class="text-red-500 text-[10px] font-bold px-2">ERR</span>';
+                    }
+                });
         })();
     </script>
 </body>
