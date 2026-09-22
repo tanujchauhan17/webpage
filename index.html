@@ -828,7 +828,6 @@
         
         btn.addEventListener('click', toggleMobileMenu);
 
-
         // Back to Top Button Logic
         const bttBtn = document.getElementById('btt-btn');
         window.addEventListener('scroll', () => {
@@ -962,12 +961,9 @@
             // Immediately set the counter to 000000 visually
             counterContainer.innerHTML = buildOdometer();
 
-            // 2. Function to fetch and update the counter
-            function updateCounter(isPoll = false) {
-                // If polling, append ?action=poll so Google Sheet doesn't log a new row
-                const fetchUrl = isPoll ? webAppUrl + "?action=poll" : webAppUrl;
-
-                fetch(fetchUrl)
+            // 2. Function to fetch and update the counter (only on page load now)
+            function updateCounter() {
+                fetch(webAppUrl)
                     .then(response => response.json())
                     .then(data => {
                         const targetCount = data.count || 0;
@@ -977,32 +973,26 @@
                         for (let i = 0; i < 6; i++) {
                             const digit = parseInt(countStr[i], 10);
                             
-                            // Stagger animation only on first load. During live updates, roll them immediately.
-                            strips[i].style.transitionDelay = isPoll ? '0ms' : `${(5 - i) * 150}ms`; 
+                            // Stagger animation on first load
+                            strips[i].style.transitionDelay = `${(5 - i) * 150}ms`; 
                             
                             // Translating down by (digit * 10%) of the strip's total height
                             strips[i].style.transform = `translateY(-${digit * 10}%)`;
                         }
                     })
                     .catch(err => {
-                        if (!isPoll) { // Only show error if the initial load fails
-                            console.error("Error loading counter:", err);
-                            counterContainer.innerHTML = '<span class="text-red-500 text-[10px] font-bold px-2">ERR</span>';
-                        }
+                        console.error("Error loading counter:", err);
+                        counterContainer.innerHTML = '<span class="text-red-500 text-[10px] font-bold px-2">ERR</span>';
                     });
             }
 
             // 3. Initial load: Wait 50ms for DOM to paint, run the animation, and log the visit
             setTimeout(() => {
-                updateCounter(false);
+                updateCounter();
             }, 50);
 
-            // 4. Background Polling: Update every 10 seconds, but ONLY if the tab is actively visible!
-            setInterval(() => {
-                if (document.visibilityState === 'visible') {
-                    updateCounter(true);
-                }
-            }, 10000); // 10000 ms = 10 seconds
+            // Note: The 10-second polling interval has been removed. 
+            // The counter will now only update when the user refreshes or reloads the page.
         })();
     </script>
 </body>
